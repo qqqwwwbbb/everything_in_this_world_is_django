@@ -81,6 +81,11 @@ class SubRubric(Rubric):
 
 
 class Bb(models.Model):
+    STATUS_CHOICE = [
+        ('new', 'новый'),
+        ('confirmed', 'подвтрежденный'),
+        ('canceled', 'отмененный')
+    ]
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT, verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
     content = models.TextField(verbose_name='Описание')
@@ -90,6 +95,9 @@ class Bb(models.Model):
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
+    status = models.CharField(max_length=254, verbose_name='Статус',
+                              choices=STATUS_CHOICE,
+                              default='new')
 
     def delete(self, *args, **kwargs):
         for ai in self.additionalimage_set.all():

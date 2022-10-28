@@ -1,4 +1,7 @@
 <{% extends 'main/base.html' %}
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
 {% block title %}{{ bb.title }} - {{ bb.rubric.name }}{% endblock %}
 
 {% block content %}
@@ -15,6 +18,7 @@
                 <p class="font-weight-bold">{{ bb.price }} руб.</p>
                 <p>{{ bb.contacts }}</p>
                 <p class="text-right font-italic">Объявление добавлено {{ bb.created_at }}</p>
+                <p class="text-right ">Статус : {{ bb.status }}</p>
             </div>
         </div>
     </div>
