@@ -1,0 +1,19 @@
+div.nav-item {
+    margin-right: 80px;
+
+}
+
+.img {
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+
+}
+
+img.main-image {
+    width: 300px;
+}
+
+img.additional-image {
+    width: 180px;
+}

@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+{% endblock %}
+
+{% block task %}
+    <img class="img"  src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img">
+        <h5 class="mr-md-auto p-2">Регистрация пользователя</h5>
+        {% endblock %}
