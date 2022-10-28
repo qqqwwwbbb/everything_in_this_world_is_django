@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
     <title>{% block title %} Главная страница {% endblock %}</title>
@@ -16,7 +18,8 @@
 
 <div class="container-fluid">
 
-    <div class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow">
+    <div style="background-color: #ff8089"
+         class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow ">
         {% block task %}
 
         {% endblock %}
@@ -37,32 +40,32 @@
             </div>
         {% else %}
             <div>
-            <a class="p-2 text-dark" href="{% url 'register' %}">Регистрация</a>
-            <a class="p-2 text-dark" href="{% url 'login' %}">Вход</a>
+                <a class="p-2 text-dark" href="{% url 'register' %}">Регистрация</a>
+                <a class="p-2 text-dark" href="{% url 'login' %}">Вход</a>
             </div>
         {% endif %}
     </div>
 
     <div class="row">
 
-        <nav class="col-md-auto nav flex-column">
+        <nav style="display: inline-block" class="col-md-auto nav flex-column">
             <a style="color:#5cd1ff;font-size: 20px" class="nav-link root" href="{% url 'home' %}">Главная</a>
             {% for rubric in rubrics %}
-       {% ifchanged rubric.super_rubric.pk %}
+                {% ifchanged rubric.super_rubric.pk %}
 
-            <span class="nav-link root font-weight-bold">
+                    <span class="nav-link root font-weight-bold">
 
             {{ rubric.super_rubric.name }}
            </span>
-{% endifchanged %}
+                {% endifchanged %}
 
-       <a class="nav-link" href="{% url 'by_rubric' pk=rubric.pk %}">
-       {{ rubric.name }}
-       </a>
+                <a class="nav-link" href="{% url 'by_rubric' pk=rubric.pk %}">
+                    {{ rubric.name }}
+                </a>
 
 
-        {% endfor %}
-        <a style="color:#5cd1ff;font-size: 20px" class="nav-link" href="{% url 'about' %}">О нас</a>
+            {% endfor %}
+            <a style="color:#5cd1ff;font-size: 20px" class="nav-link" href="{% url 'about' %}">О нас</a>
         </nav>
 
         <div class="container">

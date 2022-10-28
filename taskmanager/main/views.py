@@ -198,7 +198,7 @@ def profile_bb_delete(request, pk):
         bb.delete()
         messages.add_message(request, messages.SUCCESS,
                              'Объявление удалено')
-        return redirect('main:profile')
+        return redirect('profile')
     else:
         context = {'bb': bb}
         return render(request, 'rubric/profile_bb_delete.html', context)

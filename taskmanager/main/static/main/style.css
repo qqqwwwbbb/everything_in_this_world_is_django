@@ -1,3 +1,8 @@
+* {
+    font-size: 20px;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
 div.nav-item {
     margin-right: 80px;
 
@@ -16,4 +21,21 @@ img.main-image {
 
 img.additional-image {
     width: 180px;
+}
+
+.row {
+    background: rgb(56, 88, 175);
+    background: linear-gradient(90deg, rgba(56, 88, 175, 0.6418942577030813) 11%, rgba(227, 227, 255, 0.29175420168067223) 50%, rgba(0, 108, 255, 0.23012955182072825) 98%);
+}
+
+.upper > h5 {
+    margin-top: 15px;
+}
+
+.container-fluid {
+    float: right;
+}
+
+.d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow{
+    background: rgb(56, 88, 175);
 }
