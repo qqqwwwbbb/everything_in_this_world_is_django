@@ -1,10 +1,8 @@
-
 import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -16,7 +14,6 @@ SECRET_KEY = 'django-insecure-h%(y=$f^)0+f@$(bgr_hggssaau%6^x-j3p94%diz--z!52@k-
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -65,7 +62,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'taskmanager.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -76,23 +72,22 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 
-AUTH_PASSWORD_VALIDATORS = [
+# AUTH_PASSWORD_VALIDATORS = [
 
-    {'NAME': 'config.validators.LengthValidator', },
-    {'NAME': 'config.validators.NumberValidator',
-        'OPTIONS': {
-            'min_digits': 8,
-            'max_digits': 20,
-        }},
-    {'NAME': 'config.validators.NoUppercaseValidator', },
-    {'NAME': 'config.validators.NoLowercaseValidator', },
-    {'NAME': 'config.validators.NoSymbolValidator', },
-]
+#    {'NAME': 'config.validators.LengthValidator', },
+#    {'NAME': 'config.validators.NumberValidator',
+#       'OPTIONS': {
+#           'min_digits': 8,
+#           'max_digits': 20,
+#       }},
+#   {'NAME': 'config.validators.NoUppercaseValidator', },
+#   {'NAME': 'config.validators.NoLowercaseValidator', },
+#  {'NAME': 'config.validators.NoSymbolValidator', },
+# ]
 
 
 # Internationalization
@@ -105,7 +100,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -121,19 +115,16 @@ LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'main.AdvUser'
 
-
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
 THUMBNAIL_ALIASES = {
-   '': {
-       'default': {
-           'size':(96, 96),
-           'crop':'scale',
-       },
-   },
+    '': {
+        'default': {
+            'size': (96, 96),
+            'crop': 'scale',
+        },
+    },
 }
 
 THUMBNAIL_BASEDIR = 'thumbnails'

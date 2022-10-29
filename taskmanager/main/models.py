@@ -1,8 +1,10 @@
+from django.core.validators import RegexValidator
 from django.dispatch import Signal
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .utilities import get_timestamp_path
+from django.contrib.auth.validators import ASCIIUsernameValidator
 
 
 class Task(models.Model):
@@ -18,7 +20,34 @@ class Task(models.Model):
 
 
 class AdvUser(AbstractUser):
-    middle_name = models.CharField('Отчество', max_length=50)
+    first_name = models.CharField(max_length=15, verbose_name="Имя", validators=[
+        RegexValidator(
+            regex=r'[а-яА-ЯёЁ]',
+            message='Вводите РУССКОЕ имя',
+            code='invalid_username'
+        ),
+    ])
+    middle_name = models.CharField(max_length=15, verbose_name="Отчество", validators=[
+        RegexValidator(
+            regex=r'[а-яА-ЯёЁ]',
+            message='Вводите РУССКОЕ отчество',
+            code='invalid_username'
+        ),
+    ])
+    last_name = models.CharField(max_length=15, verbose_name="Фамилия", validators=[
+        RegexValidator(
+            regex=r'[а-яА-ЯёЁ]',
+            message='Введите РУССКУЮ фамилию',
+            code='invalid_username'
+        ),
+    ])
+    username = models.CharField(max_length=15, verbose_name="Фамилия", unique=True, validators=[
+        RegexValidator(
+            regex=r'^[a-zA-Z]+$',
+            message='Введите ENGLISH username',
+            code='invalid_username'
+        ),
+    ])
 
     def delete(self, *args, **kwargs):
         for bb in self.bb_set.all():
@@ -81,7 +110,7 @@ class SubRubric(Rubric):
 
 
 class Bb(models.Model):
-    STATUS_CHOICE = [
+    STATUS_CHOISES = [
         ('new', 'новый'),
         ('confirmed', 'подвтрежденный'),
         ('canceled', 'отмененный')
@@ -89,20 +118,18 @@ class Bb(models.Model):
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT, verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
     content = models.TextField(verbose_name='Описание')
-    price = models.FloatField(default=0, verbose_name='Цена')
-    contacts = models.TextField(verbose_name='Контакты')
     image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     status = models.CharField(max_length=254, verbose_name='Статус',
-                              choices=STATUS_CHOICE,
+                              choices=STATUS_CHOISES,
                               default='new')
 
-    def delete(self, *args, **kwargs):
+    def delete(self, args, **kwargs):
         for ai in self.additionalimage_set.all():
             ai.delete()
-        super().delete(*args, **kwargs)
+        super().delete(args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Объявления'
