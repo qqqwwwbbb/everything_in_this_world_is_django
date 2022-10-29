@@ -11,14 +11,17 @@ from django.forms import inlineformset_factory
 
 
 class UserRegisterForm(UserCreationForm):
-    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    middle_name = forms.CharField(label='Отчество', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='Подтверждение пароля',
+    last_name = forms.CharField(label='Фамилия ', max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='Имя ', max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    middle_name = forms.CharField(label='Отчество ', max_length=20,
+                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(label='Имя пользователя (20 символов)', max_length=20,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(label='Пароль (минимум 8 символов)', max_length=20, min_length=8,
                                 widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Подтверждение пароля', max_length=20, min_length=8,
+                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='Email', max_length=35, widget=forms.EmailInput(attrs={'class': 'form-control'}))
     checkbox = forms.BooleanField(label='Согласие на обработку персональных данных')
 
     class Meta:
