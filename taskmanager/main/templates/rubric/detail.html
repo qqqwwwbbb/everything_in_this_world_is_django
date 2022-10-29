@@ -32,7 +32,7 @@
         </div>
     {% endif %}
     <p><a href="{% url 'by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
-    {% if user.is_authenticated and request.user == user.is_author %}
+   {% if user.is_authenticated or user.is_superuser %}  {# {% if user.is_authenticated and request.user == blog.author or user.is_superuser %}#}
     <div class="media-body">
         Рубрика: {{ bb.rubric }}
         <p class="text-right mt-2">
