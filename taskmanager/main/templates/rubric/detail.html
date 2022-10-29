@@ -31,6 +31,7 @@
             {% endfor %}
         </div>
     {% endif %}
+
     <p><a href="{% url 'by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
     <div class="media-body">
         Рубрика: {{ bb.rubric }}

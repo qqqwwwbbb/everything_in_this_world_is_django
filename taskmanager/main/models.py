@@ -22,21 +22,21 @@ class Task(models.Model):
 class AdvUser(AbstractUser):
     first_name = models.CharField(max_length=15, verbose_name="Имя", validators=[
         RegexValidator(
-            regex=r'[а-яА-ЯёЁ]',
+            regex=r'[а-яА-ЯёЁ]+$',
             message='Вводите РУССКОЕ имя',
             code='invalid_username'
         ),
     ])
     middle_name = models.CharField(max_length=15, verbose_name="Отчество", validators=[
         RegexValidator(
-            regex=r'[а-яА-ЯёЁ]',
+            regex=r'[а-яА-ЯёЁ]+$',
             message='Вводите РУССКОЕ отчество',
             code='invalid_username'
         ),
     ])
     last_name = models.CharField(max_length=15, verbose_name="Фамилия", validators=[
         RegexValidator(
-            regex=r'[а-яА-ЯёЁ]',
+            regex=r'[а-яА-ЯёЁ]+$',
             message='Введите РУССКУЮ фамилию',
             code='invalid_username'
         ),
