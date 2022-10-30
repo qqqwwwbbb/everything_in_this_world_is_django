@@ -168,7 +168,12 @@ def profile_bb_add(request):
 def profile_bb_change(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
     if not request.user.is_author(bb):
-        return redirect('main:profile')
+        messages.add_message(request, messages.ERROR, "Вы не можете редактировать это")
+        return redirect('profile')
+    # if not hasattr(Bb.STATUS_CHOICES, 'new'):
+    #     messages.add_message(request, messages.SUCCESS,
+    #                          'Вы не можете редактировать это объявление')
+    #     return redirect('profile')
     if request.method == 'POST':
         form = BbForm(request.POST, request.FILES, instance=bb)
         if form.is_valid():
@@ -187,11 +192,15 @@ def profile_bb_change(request, pk):
 def profile_bb_delete(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
     if not request.user.is_author(bb):
-        return redirect('main:profile')
+        messages.add_message(request, messages.ERROR, "Вы не можете удалять это")
+        return redirect('profile')
+    if not hasattr(Bb.STATUS_CHOICES, 'new'):
+        messages.add_message(request, messages.ERROR, "Вы не можете удалять это")
+        return redirect('profile')
     if request.method == 'POST':
         bb.delete()
         messages.add_message(request, messages.SUCCESS,
-                             'Объявление удалено')
+                             'Заявка удалена')
         return redirect('profile')
     else:
         context = {'bb': bb}

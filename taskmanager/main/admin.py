@@ -8,31 +8,34 @@ from .models import Bb, AdditionalImage
 admin.site.register(Task)
 admin.site.register(AdvUser)
 
+
 class SubRubricInline(admin.TabularInline):
-   model = SubRubric
+    model = SubRubric
 
 
 class SuperRubricAdmin(admin.ModelAdmin):
-   exclude = ('super_rubric',)
-   inlines = (SubRubricInline,)
+    exclude = ('super_rubric',)
+    inlines = (SubRubricInline,)
+
 
 admin.site.register(SuperRubric, SuperRubricAdmin)
+
+
 class SubRubricAdmin(admin.ModelAdmin):
-   form = SubRubricForm
+    form = SubRubricForm
 
 
 admin.site.register(SubRubric, SubRubricAdmin)
 
 
 class AdditionalImageInline(admin.TabularInline):
-   model = AdditionalImage
+    model = AdditionalImage
 
 
 class BbAdmin(admin.ModelAdmin):
-   list_display = ('rubric', 'title', 'content', 'author', 'created_at')
-   fields = (('rubric', 'author'), 'title', 'content', 'price',
-             'contacts', 'image', 'is_active')
-   inlines = (AdditionalImageInline,)
+    list_display = ('rubric', 'title', 'content', 'author', 'created_at')
+    fields = (('rubric', 'author'), 'title', 'content', 'status', 'image')
+    inlines = (AdditionalImageInline,)
+
 
 admin.site.register(Bb, BbAdmin)
-

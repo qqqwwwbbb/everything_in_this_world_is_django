@@ -110,7 +110,7 @@ class SubRubric(Rubric):
 
 
 class Bb(models.Model):
-    STATUS_CHOISES = [
+    STATUS_CHOICES = [
         ('new', 'новый'),
         ('confirmed', 'подвтрежденный'),
         ('canceled', 'отмененный')
@@ -123,7 +123,7 @@ class Bb(models.Model):
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     status = models.CharField(max_length=254, verbose_name='Статус',
-                              choices=STATUS_CHOISES,
+                              choices=STATUS_CHOICES,
                               default='new')
 
     def delete(self, args, **kwargs):
