@@ -16,12 +16,13 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from .forms import SearchForm
 from .models import SubRubric, Bb
+from django.db.models import Count
 
 
 def index(request):
-    bbs = Bb.objects.filter(is_active=True)[:10]
+    bbs = Bb.objects.filter(status="confirmed")[:4]
     context = {'bbs': bbs}
-    return render(request, 'main/index.html')
+    return render(request, 'main/index.html', context)
 
 
 def about(request):
@@ -205,3 +206,10 @@ def profile_bb_delete(request, pk):
     else:
         context = {'bb': bb}
         return render(request, 'rubric/profile_bb_delete.html', context)
+
+# def counter(request, pk):
+#     if hasattr(Bb.STATUS_CHOICES, 'new'):
+#         messages.add_message(request, messages.SUCCESS, " ")
+#         return True
+
+# comments = Bb.STATUS_CHOICES('confirmed').get(id='confirmed').contest_votes.count()

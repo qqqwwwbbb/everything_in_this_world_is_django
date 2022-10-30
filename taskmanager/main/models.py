@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .utilities import get_timestamp_path
 from django.contrib.auth.validators import ASCIIUsernameValidator
+from django.db.models import Count
 
 
 class Task(models.Model):
@@ -122,6 +123,7 @@ class Bb(models.Model):
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
+#   counter = models.TextField(db_index=True, verbose_name='Счетчик')
     status = models.CharField(max_length=254, verbose_name='Статус',
                               choices=STATUS_CHOICES,
                               default='new')

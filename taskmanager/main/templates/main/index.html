@@ -20,16 +20,16 @@
 
 {% block task %}
     <div class="upper">
-    <img class="img" src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img">
-    <h5 style="color:darkred;font-size: 23px" class="mr-md-auto p-2"> Welcome to my Django Web-site </h5>
+        <img class="img" src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img">
+        <h5 style="color:darkred;font-size: 23px" class="mr-md-auto p-2"> Welcome to my Django Web-site </h5>
     </div>
 {% endblock %}
 
 {% block content %}
-   {{ rubric }}
-
-{% block searchform %}
-{% endblock %}
+    {{ rubric }}
+    <p class="text-right font-italic">Счетчик подтвержденных документов: {{ bb.counter }}</p>
+    {% block searchform %}
+    {% endblock %}
 
     <h2 class="mb-2">{{ rubric }}</h2>
     </div>
