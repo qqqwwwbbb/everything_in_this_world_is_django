@@ -1,4 +1,6 @@
 from django.contrib.auth.views import LoginView
+
+from . import models
 from .forms import UserRegisterForm, BbForm, AIFormSet
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -22,6 +24,10 @@ from django.db.models import Count
 def index(request):
     bbs = Bb.objects.filter(status="confirmed")[:4]
     context = {'bbs': bbs}
+    # counter = Bb.STATUS_CHOICES.objects.filter(status="new").count()
+    # context = {'counter': counter}
+    # message = Bb.STATUS_CHOICES.objects.filter(name__startswith='new').count()
+    # print(message)
     return render(request, 'main/index.html', context)
 
 
@@ -171,10 +177,6 @@ def profile_bb_change(request, pk):
     if not request.user.is_author(bb):
         messages.add_message(request, messages.ERROR, "Вы не можете редактировать это")
         return redirect('profile')
-    # if not hasattr(Bb.STATUS_CHOICES, 'new'):
-    #     messages.add_message(request, messages.SUCCESS,
-    #                          'Вы не можете редактировать это объявление')
-    #     return redirect('profile')
     if request.method == 'POST':
         form = BbForm(request.POST, request.FILES, instance=bb)
         if form.is_valid():
@@ -193,23 +195,18 @@ def profile_bb_change(request, pk):
 def profile_bb_delete(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
     if not request.user.is_author(bb):
-        messages.add_message(request, messages.ERROR, "Вы не можете удалять это")
+        messages.error(request,
+                       'Нельзя удалять')
         return redirect('profile')
-    if not hasattr(Bb.STATUS_CHOICES, 'new'):
-        messages.add_message(request, messages.ERROR, "Вы не можете удалять это")
+    if hasattr(Bb.STATUS_CHOICES, 'new'):
+        messages.error(request,
+                       'Статус new нельзя удалять')
         return redirect('profile')
     if request.method == 'POST':
-        bb.delete()
+        bb.delete("")
         messages.add_message(request, messages.SUCCESS,
                              'Заявка удалена')
         return redirect('profile')
     else:
         context = {'bb': bb}
         return render(request, 'rubric/profile_bb_delete.html', context)
-
-# def counter(request, pk):
-#     if hasattr(Bb.STATUS_CHOICES, 'new'):
-#         messages.add_message(request, messages.SUCCESS, " ")
-#         return True
-
-# comments = Bb.STATUS_CHOICES('confirmed').get(id='confirmed').contest_votes.count()

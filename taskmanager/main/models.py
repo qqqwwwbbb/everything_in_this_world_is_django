@@ -116,14 +116,13 @@ class Bb(models.Model):
         ('confirmed', 'подвтрежденный'),
         ('canceled', 'отмененный')
     ]
-    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT, verbose_name='Рубрика')
+    rubric = models.ForeignKey(SubRubric, on_delete=models.CASCADE, verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
     content = models.TextField(verbose_name='Описание')
     image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
-#   counter = models.TextField(db_index=True, verbose_name='Счетчик')
     status = models.CharField(max_length=254, verbose_name='Статус',
                               choices=STATUS_CHOICES,
                               default='new')
@@ -134,13 +133,13 @@ class Bb(models.Model):
         super().delete(args, **kwargs)
 
     class Meta:
-        verbose_name_plural = 'Объявления'
-        verbose_name = 'Объявление'
+        verbose_name_plural = 'Заявки'
+        verbose_name = 'Заявки'
         ordering = ['-created_at']
 
 
 class AdditionalImage(models.Model):
-    bb = models.ForeignKey(Bb, on_delete=models.CASCADE, verbose_name='Объявление')
+    bb = models.ForeignKey(Bb, on_delete=models.CASCADE, verbose_name='Заявка')
     image = models.ImageField(upload_to=get_timestamp_path, verbose_name='Изображение')
 
     class Meta:
