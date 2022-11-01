@@ -32,13 +32,15 @@
         </div>
     {% endif %}
     <p><a href="{% url 'by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
-   {% if user.is_authenticated or user.is_superuser %}  {# {% if user.is_authenticated and request.user == blog.author or user.is_superuser %}#}
+   {% if user.is_authenticated or user.is_superuser %}
     <div class="media-body">
         Рубрика: {{ bb.rubric }}
+        {% if bb.status == 'new' %}
         <p class="text-right mt-2">
             <a href="{% url 'profile_bb_change' pk=bb.pk %}">Исправить объявление</a>
             <a href="{% url 'profile_bb_delete' pk=bb.pk %}">Удалить</a>
         </p>
     </div>
+           {% endif %}
     {% endif %}
 {% endblock %}

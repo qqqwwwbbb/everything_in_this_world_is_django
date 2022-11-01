@@ -24,8 +24,8 @@ from django.db.models import Count
 def index(request):
     bbs = Bb.objects.filter(status="confirmed")[:4]
     context = {'bbs': bbs}
-    # counter = Bb.STATUS_CHOICES.objects.filter(status="new").count()
-    # context = {'counter': counter}
+    counter = Bb.STATUS_CHOICES.objects.filter(status="new").count()
+    context = {'counter': counter}
     # message = Bb.STATUS_CHOICES.objects.filter(name__startswith='new').count()
     # print(message)
     return render(request, 'main/index.html', context)
@@ -198,10 +198,14 @@ def profile_bb_delete(request, pk):
         messages.error(request,
                        'Нельзя удалять')
         return redirect('profile')
-    if hasattr(Bb.STATUS_CHOICES, 'new'):
+    if Bb.STATUS_CHOICES == 'new':
         messages.error(request,
-                       'Статус new нельзя удалять')
+                       'Нельзя удалять')
         return redirect('profile')
+    #   if hasattr(Bb.STATUS_CHOICES, 'new'):
+    #      messages.error(request,
+    #                     'Статус new нельзя удалять')
+    #      return redirect('profile')
     if request.method == 'POST':
         bb.delete("")
         messages.add_message(request, messages.SUCCESS,
@@ -210,3 +214,4 @@ def profile_bb_delete(request, pk):
     else:
         context = {'bb': bb}
         return render(request, 'rubric/profile_bb_delete.html', context)
+
