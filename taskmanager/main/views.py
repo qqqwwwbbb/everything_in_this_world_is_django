@@ -1,6 +1,4 @@
 from django.contrib.auth.views import LoginView
-
-from . import models
 from .forms import UserRegisterForm, BbForm, AIFormSet
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -20,15 +18,17 @@ from .forms import SearchForm
 from .models import SubRubric, Bb
 from django.db.models import Count
 
-
 def index(request):
     bbs = Bb.objects.filter(status="confirmed")[:4]
-    context = {'bbs': bbs}
-    counter = Bb.STATUS_CHOICES.objects.filter(status="new").count()
-    context = {'counter': counter}
-    # message = Bb.STATUS_CHOICES.objects.filter(name__startswith='new').count()
-    # print(message)
+    counter = Bb.objects.filter(status='confirmed').count()
+    context = {'bbs': bbs, 'counter': counter}
     return render(request, 'main/index.html', context)
+
+
+def profile(request):
+    bbs = Bb.objects.filter(is_active=True)[:4]
+    context = {'bbs': bbs}
+    return render(request, 'main/profile.html', context)
 
 
 def about(request):
@@ -53,11 +53,13 @@ def register(request):
 #     return render(request, 'main/login.html')
 class LoginView(LoginView):
     template_name = 'main/login.html'
+    success_url = reverse_lazy('main/profile')
 
 
 @login_required
 def profile(request):
     return render(request, 'main/profile.html')
+
 
 
 class LogoutView(LoginRequiredMixin, LogoutView):
@@ -69,7 +71,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
     model = AdvUser
     template_name = 'main/change_user_info.html'
     form_class = ChangeUserInfoForm
-    success_url = reverse_lazy('main:profile')
+    success_url = reverse_lazy('main/profile')
     success_message = 'Личные данные пользователя изменены'
 
     def dispatch(self, request, *args, **kwargs):
@@ -85,14 +87,14 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
 class PasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
                          PasswordChangeView):
     template_name = 'main/password_change.html'
-    success_url = reverse_lazy('main:profile')
+    success_url = reverse_lazy('main/profile')
     success_message = 'Пароль пользователя изменен'
 
 
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = AdvUser
     template_name = 'main/delete_user.html'
-    success_url = reverse_lazy('main:index')
+    success_url = reverse_lazy('main/index')
 
     def dispatch(self, request, *args, **kwargs):
         self.user_id = request.user.pk
@@ -136,18 +138,6 @@ def detail(request, rubric_pk, pk):
     return render(request, 'rubric/detail.html', context)
 
 
-def index(request):
-    bbs = Bb.objects.filter(is_active=True)[:4]
-    context = {'bbs': bbs}
-    return render(request, 'main/index.html', context)
-
-
-def get_context_data(self, *args, **kwargs):
-    context = super().get_context_data(*args, **kwargs)
-    context['rubrics'] = Rubric.objects.all()
-    return context
-
-
 @login_required
 def profile(request):
     bbs = Bb.objects.filter(author=request.user.pk)
@@ -163,7 +153,7 @@ def profile_bb_add(request):
             form.instance.author_id = request.user.pk
             bb = form.save()
             messages.add_message(request, messages.SUCCESS,
-                                 'Заявка создана')
+                                    'Заявка создана')
             return redirect('profile')
     else:
         form = BbForm(initial={'author': request.user.pk})
@@ -202,10 +192,6 @@ def profile_bb_delete(request, pk):
         messages.error(request,
                        'Нельзя удалять')
         return redirect('profile')
-    #   if hasattr(Bb.STATUS_CHOICES, 'new'):
-    #      messages.error(request,
-    #                     'Статус new нельзя удалять')
-    #      return redirect('profile')
     if request.method == 'POST':
         bb.delete("")
         messages.add_message(request, messages.SUCCESS,
@@ -214,4 +200,3 @@ def profile_bb_delete(request, pk):
     else:
         context = {'bb': bb}
         return render(request, 'rubric/profile_bb_delete.html', context)
-

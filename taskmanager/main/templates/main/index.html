@@ -27,7 +27,8 @@
 
 {% block content %}
     {{ rubric }}
-    <p class="text-right font-italic">Счетчик подтвержденных документов: {{ bb.counter }}</p>
+    <p class="text-right font-italic">Принятых заявок:  {{ counter }}{% if counter %}{% endif %}</p>
+    </div>
     {% block searchform %}
     {% endblock %}
 
