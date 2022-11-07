@@ -121,6 +121,8 @@ class Bb(models.Model):
     content = models.TextField(verbose_name='Описание')
     image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
+    imageses = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name=' Доп Изображение')
+    commented = models.TextField(default='', verbose_name='Комментарий')
     is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     status = models.CharField(max_length=254, verbose_name='Статус',

@@ -44,16 +44,6 @@
             {% endfor %}
         </ul>
     {% endif %}
-        {% if user.is_authenticated %}
-        <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false">Отфильтровать заявки</a>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'profile_change' %}"> Confirmed</a>
-            <a class="dropdown-item" href="{% url 'password_change' %}"> New</a>
-        </div>
-    </div>
-    {% endif %}
 {% endblock %}
 {% block task %}
     <img class="img" src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img">

@@ -11,7 +11,8 @@ from django.forms import inlineformset_factory
 
 
 class UserRegisterForm(UserCreationForm):
-    last_name = forms.CharField(label='Фамилия  (15 символов, русские буквы)', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Фамилия  (15 символов, русские буквы)',
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(label='Имя ', widget=forms.TextInput(attrs={'class': 'form-control'}))
     middle_name = forms.CharField(label='Отчество', widget=forms.TextInput(attrs={'class': 'form-control'}))
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -58,3 +59,16 @@ class BbForm(forms.ModelForm):
 
 
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
+
+
+class OrderForm(forms.ModelForm):
+    def clean(self):
+        status = self.cleaned_data.get('status')
+        imageses = self.cleaned_data.get('imageses')
+        commented = self.cleaned_data.get('commented')
+        if self.instance.status != 'new':
+            raise forms.ValidationError({'status': 'Статус можно изменить только у новых заказов'})
+        if status == 'confirmed' and not imageses:
+            raise forms.ValidationError({'status': 'Статус можно изменить только добавив картинку'})
+        if status == 'canceled' and not commented:
+            raise forms.ValidationError({'status': 'Статус можно изменить только добавив коментарий'})
