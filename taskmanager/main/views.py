@@ -18,6 +18,7 @@ from .forms import SearchForm
 from .models import SubRubric, Bb
 from django.db.models import Count
 
+
 def index(request):
     bbs = Bb.objects.filter(status="confirmed")[:4]
     counter = Bb.objects.filter(status='confirmed').count()
@@ -59,7 +60,6 @@ class LoginView(LoginView):
 @login_required
 def profile(request):
     return render(request, 'main/profile.html')
-
 
 
 class LogoutView(LoginRequiredMixin, LogoutView):
@@ -153,7 +153,7 @@ def profile_bb_add(request):
             form.instance.author_id = request.user.pk
             bb = form.save()
             messages.add_message(request, messages.SUCCESS,
-                                    'Заявка создана')
+                                 'Заявка создана')
             return redirect('profile')
     else:
         form = BbForm(initial={'author': request.user.pk})
