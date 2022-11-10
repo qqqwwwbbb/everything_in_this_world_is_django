@@ -1,5 +1,5 @@
 * {
-    font-size: 20px;
+    font-size: 21px;
     font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
@@ -7,10 +7,15 @@ div.nav-item {
     margin-right: 80px;
 
 }
+.rares {
+    font-size: 21px;
+    color: #59202a;
+    text-align: center;
+}
 
 .img {
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 90px;
     border-radius: 100%;
 
 }
@@ -38,4 +43,14 @@ img.additional-image {
 
 .d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow{
     background: rgb(56, 88, 175);
+}
+
+.list-unstyled {
+    background-color: rgba(56, 88, 175, 0.16);
+
+}
+.profiletext > h2 {
+    color: #350085;
+    margin-top: 20px;
+    font-size: 21px;
 }
