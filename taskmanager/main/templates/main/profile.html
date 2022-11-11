@@ -16,7 +16,7 @@
     {% bootstrap_javascript jquery='slim' %}
 </head>
 {% block content %}
-   <div class="profiletext"><h2>Профиль пользователя <b>{{ user.username }}</b></h2></div>
+    <div class="profiletext"><h2>Профиль пользователя <b>{{ user.username }}</b></h2></div>
     {% if user.first_name and user.last_name %}
         <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }} </p>
     {% else %}
@@ -27,13 +27,19 @@
     <p><a href="{% url 'profile_bb_add' %}">Добавить свою заявку</a></p>
     <p>
     <div>Фильтр по категориям:</div>
-    <a href="{% url 'profile' %}">Все</a>
-    {% for bb in bbs %}
-        <a href="{% url 'profile' %}?profile={{ rubric.pk }}">{{ bb.status }}</a>
+    {% if not request.GET.rubric %}  <!-- category = rubric   catalog = profile   item = status ??? -->
+        Все
+    {% else %}
+        <a href="{% url 'profile' %}?order_by={{ request.GET.order_by }}">Все</a>
+    {% endif %}
+    {% for status in rubric %}
+        {% if bb.status|stringformat:'new' == request.GET.rubric %}
+            {{ bb.status }}
+        {% else %}
+            <a href="{% url 'profile' %}?rubric={{ bb.status }}&order_by={{ request.GET.order_by }}">{{ bb.status }}</a>
+        {% endif %}
     {% endfor %}
     </p>
-    {% block searchform %}
-    {% endblock %}
 
     <h2 class="mb-2">{{ rubric }}</h2>
     </div>
