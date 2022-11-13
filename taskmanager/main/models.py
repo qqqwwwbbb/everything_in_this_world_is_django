@@ -1,4 +1,4 @@
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, FileExtensionValidator
 from django.dispatch import Signal
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
@@ -119,7 +119,8 @@ class Bb(models.Model):
     rubric = models.ForeignKey(SubRubric, on_delete=models.CASCADE, verbose_name='Рубрика')
     title = models.CharField(max_length=40, verbose_name='Товар')
     content = models.TextField(verbose_name='Описание')
-    image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение')
+    image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение',
+                              validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     imageses = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name=' Доп Изображение')
     commented = models.TextField(default='', verbose_name='Комментарий')

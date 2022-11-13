@@ -26,18 +26,10 @@
     {{ rubric }}
     <p><a href="{% url 'profile_bb_add' %}">Добавить свою заявку</a></p>
     <p>
-    <div>Фильтр по категориям:</div>
-    {% if not request.GET.rubric %}  <!-- category = rubric   catalog = profile   item = status ??? -->
-        Все
-    {% else %}
-        <a href="{% url 'profile' %}?order_by={{ request.GET.order_by }}">Все</a>
-    {% endif %}
-    {% for status in rubric %}
-        {% if bb.status|stringformat:'new' == request.GET.rubric %}
-            {{ bb.status }}
-        {% else %}
-            <a href="{% url 'profile' %}?rubric={{ bb.status }}&order_by={{ request.GET.order_by }}">{{ bb.status }}</a>
-        {% endif %}
+        <div> Фильтр для заявок </div>
+    <a href="{% url 'profile' %}">Все заявки</a>
+    {% for item in status %}
+    <a href="{% url 'profile' %}?status={{ item.pk }}">{{ bb.item }} </a>
     {% endfor %}
     </p>
 
