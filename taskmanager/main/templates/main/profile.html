@@ -20,13 +20,13 @@
     {% if user.first_name and user.last_name %}
         <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }} </p>
     {% else %}
-        <p>Здравствуйте! </p>
+        <p>Добро пожаловать в раздел вашего профиля! </p>
+        <p>Снизу находятся ваши заявки, можете найти нужную или добавить новую!</p>
     {% endif %}
-    <h3>Ваши заявки</h3>
     {{ rubric }}
     <p><a href="{% url 'profile_bb_add' %}">Добавить свою заявку</a></p>
     <p>
-    <div class="rarara" style="text-align: right;font-size: 40px;"> <p> Фильтр для заявок </p> </div>
+    <div class="rarara" style="text-align: right;"> <p> Фильтр для заявок </p> </div>
     <a href="{% url 'profile' %}" style="text-align: right;"> <p>Все заявки</p></a>
     <!-- Start of form -->
     <form action="{% url 'profile' %}" method="get" style="text-align: right;">
@@ -69,5 +69,5 @@
 {% endblock %}
 {% block task %}
     <img class="img" src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img">
-    <h5 class="mr-md-auto p-2">Ваш профиль </h5>
+    <h5 class="mr-md-auto p-2" style="font-size: 21px; color: #4c1781"> Ваш профиль <br> <br> Привет!</h5>
 {% endblock %}
