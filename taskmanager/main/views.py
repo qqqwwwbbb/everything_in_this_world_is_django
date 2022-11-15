@@ -185,6 +185,10 @@ def profile_bb_change(request, pk):
 @login_required
 def profile_bb_delete(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
+    if bb.status != 'new':
+        messages.add_message(request, messages.ERROR,
+                             'Вы не можете удалять это объявление, ведь его статус изменен')
+        return redirect('profile')
     if not request.user.is_author(bb):
         messages.error(request,
                        'Нельзя удалять')
