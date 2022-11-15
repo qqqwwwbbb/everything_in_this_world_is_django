@@ -22,6 +22,11 @@ div.nav-item {
     border-radius: 100%;
 
 }
+.footer {
+    margin-top: -10px;
+    height: 101vh;
+    background-color: #162e5c;
+}
 
 img.main-image {
     width: 300px;
@@ -58,9 +63,11 @@ img.additional-image {
 }
 
 .profiletext > h2 {
-    color: #350085;
+    color: #e2dbff;
     margin-top: 20px;
     font-size: 21px;
+    text-align: center;
+    text-shadow: 0 0 10px #3dc4ff,0 0 20px #41d3ff,0 0 30px #41ddff,0 0 40px #3fe2ff;
 }
 
 @media screen and (max-width: 768px) {
