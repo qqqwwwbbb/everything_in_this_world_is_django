@@ -26,12 +26,20 @@
     {{ rubric }}
     <p><a href="{% url 'profile_bb_add' %}">Добавить свою заявку</a></p>
     <p>
-        <div> Фильтр для заявок </div>
+    <div class="rarara"> <p> Фильтр для заявок </p> </div>
     <a href="{% url 'profile' %}">Все заявки</a>
+    <!-- Start of form -->
+    <form action="{% url 'profile' %}" method="get">
     {% for item in status %}
-    <a href="{% url 'profile' %}?status={{ item.pk }}">{{ bb.item }} </a>
+        <li class="editContent">
+            <a href="{% url 'profile' %}?status={{ item.0 }}">{{ item.1 }} </a>
+            <input type="checkbox" class="checked" name="status" value="{{ item.0 }}">
+            <span class="span editContent">{{ bb.status }}</span>
+        </li>
     {% endfor %}
-    </p>
+    <button type="submit">Find status</button>
+    </form>
+    <!-- End of form -->
 
     <h2 class="mb-2">{{ rubric }}</h2>
     </div>

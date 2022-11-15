@@ -42,7 +42,7 @@ class AdvUser(AbstractUser):
             code='invalid_username'
         ),
     ])
-    username = models.CharField(max_length=15, verbose_name="Фамилия", unique=True, validators=[
+    username = models.CharField(max_length=15, verbose_name="Имя пользователя", unique=True, validators=[
         RegexValidator(
             regex=r'^[a-zA-Z]+$',
             message='Введите ENGLISH username',

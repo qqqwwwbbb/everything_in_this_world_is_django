@@ -26,12 +26,6 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 
-def profile(request):
-    bbs = Bb.objects.filter(is_active=True)[:4]
-    context = {'bbs': bbs}
-    return render(request, 'main/profile.html', context)
-
-
 def about(request):
     return render(request, 'main/about.html')
 
@@ -55,11 +49,6 @@ def register(request):
 class LoginView(LoginView):
     template_name = 'main/login.html'
     success_url = reverse_lazy('main/profile')
-
-
-@login_required
-def profile(request):
-    return render(request, 'main/profile.html')
 
 
 class LogoutView(LoginRequiredMixin, LogoutView):
@@ -140,9 +129,21 @@ def detail(request, rubric_pk, pk):
 
 @login_required
 def profile(request):
-    bbs = Bb.objects.filter(author=request.user.pk)
-    context = {'bbs': bbs}
-    return render(request, 'main/profile.html', context)
+    STATUS_CHOICES = [
+        ('new', 'новый'),
+        ('confirmed', 'подвтрежденный'),
+        ('canceled', 'отмененный')
+    ]
+    status = request.GET.get('status')
+
+    if status:
+        bbs = Bb.objects.filter(author=request.user.pk, status=status)
+    else:
+        bbs = Bb.objects.filter(author=request.user.pk)
+    return render(request, 'main/profile.html', context={
+        'status': STATUS_CHOICES,
+        'bbs': bbs
+    })
 
 
 @login_required
