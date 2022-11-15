@@ -6,6 +6,8 @@ from django.db import models
 from .utilities import get_timestamp_path
 from django.contrib.auth.validators import ASCIIUsernameValidator
 from django.db.models import Count
+from django.core.exceptions import ValidationError
+from django.core.files.images import get_image_dimensions
 
 
 class Task(models.Model):
@@ -110,6 +112,12 @@ class SubRubric(Rubric):
         verbose_name_plural = 'Подрубрики'
 
 
+def validate_image(value):
+    limit = 2 * 1024 * 1024
+    if value.size > limit:
+        raise ValidationError('Файл слишком большой, отправьте до 2 МБ')
+
+
 class Bb(models.Model):
     STATUS_CHOICES = [
         ('new', 'новый'),
@@ -117,10 +125,12 @@ class Bb(models.Model):
         ('canceled', 'отмененный')
     ]
     rubric = models.ForeignKey(SubRubric, on_delete=models.CASCADE, verbose_name='Рубрика')
-    title = models.CharField(max_length=40, verbose_name='Товар')
+    title = models.CharField(max_length=40, verbose_name='Название')
     content = models.TextField(verbose_name='Описание')
     image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение',
-                              validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
+                              validators=[
+                                  FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp']),
+                                  validate_image], help_text='Максимальный объем файла не должен превышать 2 МБ')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор объявления')
     imageses = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name=' Доп Изображение')
     commented = models.TextField(default='', verbose_name='Комментарий')
@@ -140,6 +150,13 @@ class Bb(models.Model):
         verbose_name_plural = 'Заявки'
         verbose_name = 'Заявки'
         ordering = ['-created_at']
+
+
+#    def validate_image(image):
+#        file_size = image.file.size
+#        limit_kb = 150
+#        if file_size > limit_kb * 1024:
+#            raise ValidationError('Файл слишком большой, отправьте до 2 МБ')
 
 
 class AdditionalImage(models.Model):

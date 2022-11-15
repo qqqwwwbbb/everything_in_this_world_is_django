@@ -18,26 +18,21 @@
     {% bootstrap_javascript jquery='slim' %}
 </head>
 
-{% block task %}
-    <div class="upper">
-        <img class="img" src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img">
-        <h5 style="color:darkred;font-size: 23px;text-align: center;position: absolute;margin-left: 35%;" class="mr-md-auto p-2">~ Welcome to my Django Web-site ~</h5>
-    </div>
-{% endblock %}
 
 {% block content %}
     {{ rubric }}
-    <p class="text-right font-italic">Принятых заявок:  {{ counter }}{% if counter %}{% endif %}</p>
+    <p class="text-right font-italic" style="color: rgba(255,255,255,0.56); position: absolute;">Принятых заявок:
+        {{ counter }}{% if counter %}{% endif %}</p>
     </div>
     {% block searchform %}
     {% endblock %}
-    <div class="rares"> Недавно добавленные заявки (подтвержденные): </div>
+    <div class="rares"> Недавно добавленные заявки (подтвержденные):</div>
     <h2 class="mb-2">{{ rubric }}</h2>
     </div>
     {% if bbs %}
         <ul class="list-unstyled">
             {% for bb in bbs %}
-                <li class="media my-5 p-3 border">
+                <li class="media my-5 p-3 border" style="width: 35%; align-items: center; display: inline-block; margin-left: 170px">
                     {% url 'detail' rubric_pk=rubric.pk pk=bb.pk as url %}
                     <a href="{{ url }}{{ all }}">
                         {% if bb.image %}
@@ -46,8 +41,8 @@
                             <img class="mr-3" src="{% static 'rubric/empty.jpg' %}">
                         {% endif %}
                     </a>
-                    <div class="media-body">
-                        <h3><a href="{{ url }}/{{bb.rubric.id}}/{{ bb.pk }}">{{ bb.title }}</a></h3>
+                    <div class="media-body" style="color: rgba(230,235,255,0.92)">
+                        <h3><a href="{{ url }}/{{ bb.rubric.id }}/{{ bb.pk }}">{{ bb.title }}</a></h3>
                         <div>{{ bb.content }}</div>
                         <p class="text-right font-weight-bold">{{ bb.price }}</p>
                         <p class="text-right font-italic">{{ bb.created_at }}</p>

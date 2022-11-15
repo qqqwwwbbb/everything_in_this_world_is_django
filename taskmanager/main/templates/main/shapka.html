@@ -18,7 +18,7 @@
 
 <div class="container-fluid">
 
-    <div style="background-color: #343a40 !important"
+    <div style="background-color: #ff8089"
          class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow ">
         {% block task %}
 
@@ -54,63 +54,62 @@
         {% endif %}
     </div>
 
-    <header class="py-5 bg-image-full"
-            style="background-image: url('https://images.unsplash.com/photo-1665285977193-f2fa8a0b4ffa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')">
-        <div class="text-center my-5">
-            <nav style="display: inline-block; float: left;" class="col-md-auto nav flex-column">
-                <a style="color:#5cd1ff;font-size: 20px" class="nav-link root" href="{% url 'home' %}">Главная</a>
-                {% for rubric in rubrics %}
-                    {% ifchanged rubric.super_rubric.pk %}
+    <div class="row">
 
-                        <span class="nav-link root font-weight-bold">
+        <nav style="display: inline-block" class="col-md-auto nav flex-column">
+            <a style="color:#5cd1ff;font-size: 20px" class="nav-link root" href="{% url 'home' %}">Главная</a>
+            {% for rubric in rubrics %}
+                {% ifchanged rubric.super_rubric.pk %}
+
+                    <span class="nav-link root font-weight-bold">
 
             {{ rubric.super_rubric.name }}
            </span>
-                    {% endifchanged %}
+                {% endifchanged %}
 
-                    <a class="nav-link" href="{% url 'by_rubric' pk=rubric.pk %}">
-                        {{ rubric.name }}
-                    </a>
+                <a class="nav-link" href="{% url 'by_rubric' pk=rubric.pk %}">
+                    {{ rubric.name }}
+                </a>
+
+
+            {% endfor %}
+            <a style="color:#5cd1ff;font-size: 20px" class="nav-link" href="{% url 'about' %}">О нас</a>
+        </nav>
+
+        <div class="container">
+            {% bootstrap_messages %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    {% if message.tags == 'error' %}
+
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            A simple primary alert-check it out!
+                        </div>
+                    {% endif %}
 
 
                 {% endfor %}
-                <a style="color:#5cd1ff;font-size: 20px" class="nav-link" href="{% url 'about' %}">О нас</a>
-            </nav>
-            <img class="img-fluid rounded-circle mb-4" style="height: 120px;width: 120px;"
-                 src="https://static.wikia.nocookie.net/acfa1aa3-625a-4cd8-8e10-fa5eaec83460" alt="img"/>
-            <h1 class="text-white fs-3 fw-bolder" style="position: absolute; left:41%">Welcome to my Django
-                Web-site</h1>
+
+            {% endif %}
+
+
+            {% block content %}
+            {% endblock %}
         </div>
-    </header>
-    <div class="container">
-        {% bootstrap_messages %}
 
-        {% if messages %}
-
-            {% for message in messages %}
-
-                {% if message.tags == 'error' %}
-
-                    <div class="alert alert-danger" role="alert">
-                        {{ message }}
-                    </div>
-                {% else %}
-                    <div class="alert alert-{{ message.tags }}" role="alert">
-                        A simple primary alert-check it out!
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        {% block content %}
-        {% endblock %}
     </div>
+
+
 </div>
+<div class="container">{% block contend %}{% endblock %}
 </div>
+
 </body>
-<footer style="margin-top:-28px; text-align: center; background: #162e5c;">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; github.com/qqqwwwbbb </p></div>
-</footer>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+</html>
