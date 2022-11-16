@@ -4,8 +4,10 @@
 {% block content %}
     <h2>Правка личных данных пользователя {{ user.username }}</h2>
     <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form layout='horizontal' %}
-        {% buttons submit='Сохранить' %}{% endbuttons %}
+        <div class="field">
+            {% csrf_token %}
+            {{ form.as_div }}
+            {% buttons submit='Сохранить' %}{% endbuttons %}
+        </div>
     </form>
 {% endblock %}

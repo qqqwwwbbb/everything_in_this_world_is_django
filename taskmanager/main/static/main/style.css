@@ -22,6 +22,7 @@ div.nav-item {
     border-radius: 100%;
 
 }
+
 .footer {
     margin-top: -10px;
     height: 101vh;
@@ -38,7 +39,26 @@ img.additional-image {
 
 .row {
     background-color: #162e5c;
+}
 
+div.field {
+    text-align: center;
+    word-spacing: 5px;
+    padding-top: 30px;
+    padding-bottom: 25px;
+}
+
+div.field input{
+    color: #1a1e21;
+}
+
+div.field label {
+    display: block;
+    font-size: 18px;
+}
+.container > h2{
+    padding-top: 10px;
+    text-align: center;
 }
 
 .upper {
@@ -62,12 +82,13 @@ img.additional-image {
 
 }
 
+
 .profiletext > h2 {
     color: #e2dbff;
     margin-top: 20px;
     font-size: 21px;
     text-align: center;
-    text-shadow: 0 0 10px #3dc4ff,0 0 20px #41d3ff,0 0 30px #41ddff,0 0 40px #3fe2ff;
+    text-shadow: 0 0 10px #3dc4ff, 0 0 20px #41d3ff, 0 0 30px #41ddff, 0 0 40px #3fe2ff;
 }
 
 @media screen and (max-width: 768px) {
